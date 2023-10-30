@@ -3,7 +3,7 @@ import loginService from '../services/login';
 import blogService from '../services/blogs';
 
 const LoginForm = (props) => {
-    const { setUser } = props;
+    const { setUser, showNotification } = props;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const handleLogin = async (e) => {
@@ -22,7 +22,10 @@ const LoginForm = (props) => {
             setUsername('');
             setPassword('');
         } catch (error) {
-            console.log('Something went wrong... Check your credentials.');
+            showNotification(
+                'Something went wrong... Check your credentials.',
+                true
+            );
         }
     };
     return (

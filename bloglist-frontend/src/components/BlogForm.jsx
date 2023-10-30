@@ -2,7 +2,7 @@ import { useState } from 'react';
 import blogService from '../services/blogs';
 
 const BlogForm = (props) => {
-    const { setBlogs } = props;
+    const { setBlogs, showNotification } = props;
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [url, setUrl] = useState('');
@@ -20,8 +20,11 @@ const BlogForm = (props) => {
             setAuthor('');
             setUrl('');
             setBlogs((blogs) => [...blogs, blog]);
+            showNotification(
+                `Added a new blog item: ${blog.title} by ${blog.author}`
+            );
         } catch (error) {
-            console.log('error creating a bloglist item', error);
+            showNotification('error creating a bloglist item', true);
         }
     };
     return (

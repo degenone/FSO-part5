@@ -7,6 +7,7 @@ import BlogForm from './components/BlogForm';
 const App = () => {
     const [blogs, setBlogs] = useState([]);
     const [user, setUser] = useState(null);
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -26,10 +27,31 @@ const App = () => {
         window.localStorage.removeItem('loggedInBloglistUser');
     };
 
+    const showNotification = (message, isError = false) => {
+        setNotification({
+            message,
+            isError,
+        });
+        setTimeout(() => {
+            setNotification(null);
+        }, 3500);
+    };
+
     return (
         <div>
+            {notification !== null && (
+                <div
+                    className={`notification${
+                        notification.isError ? ' error' : ''
+                    }`}>
+                    {notification.message}
+                </div>
+            )}
             {user === null ? (
-                <LoginForm setUser={setUser} />
+                <LoginForm
+                    setUser={setUser}
+                    showNotification={showNotification}
+                />
             ) : (
                 <>
                     <div className='titlePanel'>
@@ -39,7 +61,10 @@ const App = () => {
                             Log Out
                         </button>
                     </div>
-                    <BlogForm setBlogs={setBlogs} />
+                    <BlogForm
+                        setBlogs={setBlogs}
+                        showNotification={showNotification}
+                    />
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}
