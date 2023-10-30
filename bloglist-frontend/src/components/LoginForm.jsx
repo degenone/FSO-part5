@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import loginService from '../services/login';
+import blogService from '../services/blogs';
 
 const LoginForm = (props) => {
     const { setUser } = props;
@@ -17,6 +18,7 @@ const LoginForm = (props) => {
                 JSON.stringify(user)
             );
             setUser(user);
+            blogService.setToken(user.token);
             setUsername('');
             setPassword('');
         } catch (error) {
@@ -25,35 +27,37 @@ const LoginForm = (props) => {
     };
     return (
         <>
-            <h2>Log in to the Bloglist Application</h2>
             <form onSubmit={handleLogin}>
-                <div>
-                    <label htmlFor='username'>Enter username:</label>
-                    <input
-                        type='text'
-                        name='username'
-                        id='username'
-                        required
-                        minLength={3}
-                        value={username}
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor='password'>Enter password:</label>
-                    <input
-                        type='password'
-                        name='password'
-                        id='password'
-                        required
-                        minLength={8}
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
-                </div>
-                <div>
-                    <input type='submit' value='Login' />
-                </div>
+                <fieldset>
+                    <legend>Log in to the Bloglist Application</legend>
+                    <div className='formGroup'>
+                        <label htmlFor='username'>Enter username:</label>
+                        <input
+                            type='text'
+                            name='username'
+                            id='username'
+                            required
+                            minLength={3}
+                            value={username}
+                            onChange={({ target }) => setUsername(target.value)}
+                        />
+                    </div>
+                    <div className='formGroup'>
+                        <label htmlFor='password'>Enter password:</label>
+                        <input
+                            type='password'
+                            name='password'
+                            id='password'
+                            required
+                            minLength={8}
+                            value={password}
+                            onChange={({ target }) => setPassword(target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input type='submit' value='Login' />
+                    </div>
+                </fieldset>
             </form>
         </>
     );

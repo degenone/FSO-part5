@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
 import LoginForm from './components/LoginForm';
+import BlogForm from './components/BlogForm';
 
 const App = () => {
     const [blogs, setBlogs] = useState([]);
@@ -16,6 +17,7 @@ const App = () => {
         if (userJSON) {
             const user = JSON.parse(userJSON);
             setUser(user);
+            blogService.setToken(user.token);
         }
     }, []);
 
@@ -37,6 +39,7 @@ const App = () => {
                             Log Out
                         </button>
                     </div>
+                    <BlogForm setBlogs={setBlogs} />
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}
