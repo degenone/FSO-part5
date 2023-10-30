@@ -12,6 +12,10 @@ const LoginForm = (props) => {
                 username,
                 password,
             });
+            window.localStorage.setItem(
+                'loggedInBloglistUser',
+                JSON.stringify(user)
+            );
             setUser(user);
             setUsername('');
             setPassword('');
