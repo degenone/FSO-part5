@@ -1,16 +1,16 @@
 .titlePanel {
     min-height: 3.5rem;
     margin-block-end: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
     border-bottom: 1px solid hsl(0, 0%, 0%, 0.3);
 }
 
-.titlePanel > button {
-    height: min-content;
+.titlePanel > button,
+.titlePanel > h2 {
+    margin-inline: 1rem;
 }
 
 .titlePanel > * {
-    margin-inline: 1rem;
+    margin-block: auto;
 }
