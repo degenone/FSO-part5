@@ -13,7 +13,16 @@ const App = () => {
     const blogFormRef = useRef(null);
 
     useEffect(() => {
-        blogService.getAll().then((blogs) => setBlogs(blogs));
+        const fetchBlogs = async () => {
+            const resp = await blogService.getAll();
+            resp.sort((a, b) => {
+                if (a.likes > b.likes) return -1;
+                else if (a.likes < b.likes) return 1;
+                return 0;
+            });
+            setBlogs(resp);
+        };
+        fetchBlogs();
     }, []);
 
     useEffect(() => {

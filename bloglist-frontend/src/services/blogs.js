@@ -5,9 +5,9 @@ let token = null;
 
 const setToken = (value) => (token = `Bearer ${value}`);
 
-const getAll = () => {
-    const request = axios.get(URL);
-    return request.then((response) => response.data);
+const getAll = async () => {
+    const resp = await axios.get(URL);
+    return resp.data;
 };
 
 const create = async (blog) => {
