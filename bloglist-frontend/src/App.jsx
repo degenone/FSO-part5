@@ -28,6 +28,7 @@ const App = () => {
     const addBlog = async (blogOjb) => {
         try {
             const blog = await blogService.create(blogOjb);
+            blog.user = { name: user.name, username: user.username };
             setBlogs((blogs) => [...blogs, blog]);
             showNotification(
                 `Added a new blog item: ${blog.title} by ${blog.author}`
@@ -35,7 +36,7 @@ const App = () => {
             blogFormRef.current.toggleVisibility();
             return true;
         } catch (error) {
-            showNotification('error creating a bloglist item', true);
+            showNotification('error creating a blog list item', true);
         }
         return false;
     };
