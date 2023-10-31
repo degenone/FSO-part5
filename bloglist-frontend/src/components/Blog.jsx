@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Blog = (props) => {
     const { blog, likeBlog, deleteBlog, username } = props;
@@ -38,12 +39,21 @@ const Blog = (props) => {
                     </button>
                 </p>
                 <p>{blog.user.name}</p>
-                <button type='button' onClick={handleDelete} disabled={blog.user.username !== username}>
+                <button
+                    type='button'
+                    onClick={handleDelete}
+                    disabled={blog.user.username !== username}>
                     Delete This
                 </button>
             </div>
         </div>
     );
+};
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    likeBlog: PropTypes.func.isRequired,
+    deleteBlog: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
 };
 
 export default Blog;

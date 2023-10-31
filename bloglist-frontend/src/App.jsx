@@ -64,11 +64,15 @@ const App = () => {
     };
 
     const deleteBlog = async (id) => {
-        const blog = blogs.find(b => b.id === id);
-        if (window.confirm(`Are you sure you want to remove "${blog.title}" by ${blog.author}`)) {
+        const blog = blogs.find((b) => b.id === id);
+        if (
+            window.confirm(
+                `Are you sure you want to remove "${blog.title}" by ${blog.author}`
+            )
+        ) {
             try {
                 await blogService.deleteBlog(id);
-                setBlogs(blogs.filter(b => b.id !== id));
+                setBlogs(blogs.filter((b) => b.id !== id));
             } catch (error) {
                 showNotification('error deleting blog list item', true);
             }
