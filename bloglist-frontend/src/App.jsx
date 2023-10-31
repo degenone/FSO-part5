@@ -90,7 +90,7 @@ const App = () => {
                 <>
                     <div className='titlePanel'>
                         <h2>My Blogs List</h2>
-                        <p>User: {user.username}</p>
+                        <p>User: {user.name}</p>
                         <button type='button' onClick={handleLogout}>
                             Log Out
                         </button>
