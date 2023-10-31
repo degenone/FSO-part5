@@ -41,6 +41,19 @@ const App = () => {
         return false;
     };
 
+    const likeBlog = async (id, blogOjb) => {
+        try {
+            const blog = await blogService.update(id, blogOjb);
+            setBlogs(
+                blogs.map((b) =>
+                    b.id === blog.id ? { ...b, likes: blog.likes } : b
+                )
+            );
+        } catch (error) {
+            showNotification('error liking blog item', true);
+        }
+    };
+
     const handleLogin = async (userObj) => {
         try {
             const user = await loginService.login(userObj);
@@ -100,7 +113,7 @@ const App = () => {
                         <BlogForm addBlog={addBlog} />
                     </Togglable>
                     {blogs.map((blog) => (
-                        <Blog key={blog.id} blog={blog} />
+                        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
                     ))}
                 </>
             )}

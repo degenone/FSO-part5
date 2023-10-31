@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
 const Blog = (props) => {
-    const { blog } = props;
+    const { blog, likeBlog } = props;
     const [visible, setVisible] = useState(false);
-
     const blogStyle = {
         paddingTop: '0.4rem',
         paddingBottom: visible ? '' : '0.4rem',
@@ -11,6 +10,11 @@ const Blog = (props) => {
         border: 'dashed',
         borderWidth: '2px',
         marginBottom: 5,
+    };
+    const handleLike = async () => {
+        await likeBlog(blog.id, {
+            likes: blog.likes + 1,
+        });
     };
     return (
         <div style={blogStyle}>
@@ -25,7 +29,10 @@ const Blog = (props) => {
                     </a>
                 </p>
                 <p>
-                    Likes: {blog.likes} <button type='button'>Like</button>
+                    Likes: {blog.likes}{' '}
+                    <button type='button' onClick={handleLike}>
+                        Like
+                    </button>
                 </p>
                 <p>{blog.user.name}</p>
             </div>
