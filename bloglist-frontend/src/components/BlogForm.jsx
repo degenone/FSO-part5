@@ -1,37 +1,29 @@
 import { useState } from 'react';
-import blogService from '../services/blogs';
 
 const BlogForm = (props) => {
-    const { setBlogs, showNotification } = props;
+    const { addBlog } = props;
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [url, setUrl] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newBlog = {
+        const blog = {
             title,
             author,
             url,
         };
-        try {
-            const blog = await blogService.create(newBlog);
+        if (addBlog(blog)) {
             setTitle('');
             setAuthor('');
             setUrl('');
-            setBlogs((blogs) => [...blogs, blog]);
-            showNotification(
-                `Added a new blog item: ${blog.title} by ${blog.author}`
-            );
-        } catch (error) {
-            showNotification('error creating a bloglist item', true);
         }
     };
     return (
-        <div className='blogForm'>
+        <div>
             <form onSubmit={handleSubmit}>
                 <fieldset>
-                    <legend>Create a Blog item</legend>
+                    <legend>Create a new Blog List Item</legend>
                     <div className='formGroup'>
                         <label htmlFor='title'>Title:</label>
                         <input

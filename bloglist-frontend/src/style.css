@@ -47,3 +47,7 @@ legend {
 .error {
     color: firebrick;
 }
+
+.hidden {
+    display: none;
+}

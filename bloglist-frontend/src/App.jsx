@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
+import loginService from './services/login';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
+import Togglable from './components/Togglable';
 
 const App = () => {
     const [blogs, setBlogs] = useState([]);
     const [user, setUser] = useState(null);
     const [notification, setNotification] = useState(null);
+    const blogFormRef = useRef(null);
 
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -21,6 +24,40 @@ const App = () => {
             blogService.setToken(user.token);
         }
     }, []);
+
+    const addBlog = async (blogOjb) => {
+        try {
+            const blog = await blogService.create(blogOjb);
+            setBlogs((blogs) => [...blogs, blog]);
+            showNotification(
+                `Added a new blog item: ${blog.title} by ${blog.author}`
+            );
+            blogFormRef.current.toggleVisibility();
+            return true;
+        } catch (error) {
+            showNotification('error creating a bloglist item', true);
+        }
+        return false;
+    };
+
+    const handleLogin = async (userObj) => {
+        try {
+            const user = await loginService.login(userObj);
+            window.localStorage.setItem(
+                'loggedInBloglistUser',
+                JSON.stringify(user)
+            );
+            setUser(user);
+            blogService.setToken(user.token);
+            return true;
+        } catch (error) {
+            showNotification(
+                'Something went wrong... Check your credentials.',
+                true
+            );
+        }
+        return false;
+    };
 
     const handleLogout = () => {
         setUser(null);
@@ -48,10 +85,7 @@ const App = () => {
                 </div>
             )}
             {user === null ? (
-                <LoginForm
-                    setUser={setUser}
-                    showNotification={showNotification}
-                />
+                <LoginForm handleLogin={handleLogin} />
             ) : (
                 <>
                     <div className='titlePanel'>
@@ -61,10 +95,9 @@ const App = () => {
                             Log Out
                         </button>
                     </div>
-                    <BlogForm
-                        setBlogs={setBlogs}
-                        showNotification={showNotification}
-                    />
+                    <Togglable buttonLabel='Create New Item' ref={blogFormRef}>
+                        <BlogForm addBlog={addBlog} />
+                    </Togglable>
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}

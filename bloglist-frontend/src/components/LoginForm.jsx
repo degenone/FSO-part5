@@ -1,36 +1,23 @@
 import { useState } from 'react';
-import loginService from '../services/login';
-import blogService from '../services/blogs';
 
 const LoginForm = (props) => {
-    const { setUser, showNotification } = props;
+    const { handleLogin } = props;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const user = await loginService.login({
-                username,
-                password,
-            });
-            window.localStorage.setItem(
-                'loggedInBloglistUser',
-                JSON.stringify(user)
-            );
-            setUser(user);
-            blogService.setToken(user.token);
+        const user = {
+            username,
+            password,
+        };
+        if (handleLogin(user)) {
             setUsername('');
             setPassword('');
-        } catch (error) {
-            showNotification(
-                'Something went wrong... Check your credentials.',
-                true
-            );
         }
     };
     return (
-        <>
-            <form onSubmit={handleLogin}>
+        <div>
+            <form onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>Log in to the Bloglist Application</legend>
                     <div className='formGroup'>
@@ -62,7 +49,7 @@ const LoginForm = (props) => {
                     </div>
                 </fieldset>
             </form>
-        </>
+        </div>
     );
 };
 
