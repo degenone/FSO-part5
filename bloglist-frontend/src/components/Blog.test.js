@@ -40,12 +40,31 @@ describe('<Blog/>', () => {
                 username={'testuser'}
             />
         );
-        const btn = container.querySelector('.blog-header > button');
+        const btn = container.querySelector('.btn-toggle');
         const user = userEvent.setup();
         await user.click(btn);
         const details = container.querySelector('.blog-details');
         expect(details.classList).not.toContain('hidden');
         screen.getByText(blog.url);
         screen.getByText(`Likes: ${blog.likes}`);
+    });
+
+    test('should click like button twice', async () => {
+        const likeHandler = jest.fn();
+        const { container } = render(
+            <Blog
+                blog={blog}
+                likeBlog={likeHandler}
+                deleteBlog={jest.fn()}
+                username={'testuser'}
+            />
+        );
+        const btn = container.querySelector('.btn-toggle');
+        const user = userEvent.setup();
+        await user.click(btn);
+        const likeBtn = container.querySelector('.btn-like');
+        await user.click(likeBtn);
+        await user.click(likeBtn);
+        expect(likeHandler.mock.calls).toHaveLength(2);
     });
 });

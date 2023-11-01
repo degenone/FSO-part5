@@ -24,7 +24,10 @@ const Blog = (props) => {
         <div style={blogStyle}>
             <div className='blog-header'>
                 <strong>{blog.title}</strong> by <i>{blog.author}</i>{' '}
-                <button type='button' onClick={() => setVisible(!visible)}>
+                <button
+                    className='btn-toggle'
+                    type='button'
+                    onClick={() => setVisible(!visible)}>
                     {visible ? 'Hide' : 'View'}
                 </button>
             </div>
@@ -36,12 +39,16 @@ const Blog = (props) => {
                 </p>
                 <p>
                     Likes: {blog.likes}{' '}
-                    <button type='button' onClick={handleLike}>
+                    <button
+                        className='btn-like'
+                        type='button'
+                        onClick={handleLike}>
                         Like
                     </button>
                 </p>
                 <p>{blog.user.name}</p>
                 <button
+                    className='btn-delete'
                     type='button'
                     onClick={handleDelete}
                     disabled={blog.user.username !== username}>
