@@ -1,8 +1,4 @@
-# My answers for the exercises in part 4 of Full Stack Open
-
-[Phonebook](https://phonebook-fso-degenone.onrender.com/)
-
-[Notes](https://notes-degenone.fly.dev/)
+# My answers for the exercises in part 5 of Full Stack Open
 
 - [1-4](https://fullstackopen.com/en/part5/login_in_frontend#exercises-5-1-5-4)
 - [5-11](https://fullstackopen.com/en/part5/props_children_and_proptypes#exercises-5-5-5-11)
