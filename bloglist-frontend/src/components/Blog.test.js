@@ -30,4 +30,22 @@ describe('<Blog/>', () => {
         const details = container.querySelector('.blog-details');
         expect(details.classList).toContain('hidden');
     });
+
+    test('should show blog details after button click', async () => {
+        const { container } = render(
+            <Blog
+                blog={blog}
+                likeBlog={jest.fn()}
+                deleteBlog={jest.fn()}
+                username={'testuser'}
+            />
+        );
+        const btn = container.querySelector('.blog-header > button');
+        const user = userEvent.setup();
+        await user.click(btn);
+        const details = container.querySelector('.blog-details');
+        expect(details.classList).not.toContain('hidden');
+        screen.getByText(blog.url);
+        screen.getByText(`Likes: ${blog.likes}`);
+    });
 });
