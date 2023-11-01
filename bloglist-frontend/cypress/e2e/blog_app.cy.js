@@ -44,6 +44,11 @@ describe('Blog app', () => {
             cy.login(user.username, user.password);
         });
 
+        it('BlogForm should not be visible', function() {
+            cy.contains('Create New Item').should('be.visible');
+            cy.contains('Create a new Blog List Item').should('not.be.visible');
+        });
+
         it('A blog list item can be created', function () {
             cy.get('.btn-show').click();
             cy.contains('Cancel');
