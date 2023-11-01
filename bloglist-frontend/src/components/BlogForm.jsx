@@ -61,7 +61,7 @@ const BlogForm = (props) => {
                         />
                     </div>
                     <div>
-                        <input type='submit' value='Create' />
+                        <input id='btn-create' type='submit' value='Create' />
                     </div>
                 </fieldset>
             </form>

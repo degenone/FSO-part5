@@ -1,4 +1,3 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -18,8 +17,8 @@ describe('<BlogForm/>', () => {
         const btn = container.querySelector('input[type="submit"]');
         await user.click(btn);
         expect(submitHandler.mock.calls).toHaveLength(1);
-        expect(submitHandler.mock.calls[0][0]['title']).toBe('Title test')
-        expect(submitHandler.mock.calls[0][0]['author']).toBe('Author test')
-        expect(submitHandler.mock.calls[0][0]['url']).toBe('Url test')
+        expect(submitHandler.mock.calls[0][0]['title']).toBe('Title test');
+        expect(submitHandler.mock.calls[0][0]['author']).toBe('Author test');
+        expect(submitHandler.mock.calls[0][0]['url']).toBe('Url test');
     });
 });

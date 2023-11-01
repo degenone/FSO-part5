@@ -46,7 +46,7 @@ const LoginForm = (props) => {
                         />
                     </div>
                     <div>
-                        <input type='submit' value='Login' />
+                        <input id='btn-login' type='submit' value='Login' />
                     </div>
                 </fieldset>
             </form>

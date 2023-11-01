@@ -126,7 +126,7 @@ const App = () => {
             {user === null ? (
                 <LoginForm handleLogin={handleLogin} />
             ) : (
-                <>
+                <div>
                     <div className='titlePanel'>
                         <h2>My Blogs List</h2>
                         <p>User: {user.name}</p>
@@ -146,7 +146,7 @@ const App = () => {
                             username={user.username}
                         />
                     ))}
-                </>
+                </div>
             )}
         </div>
     );

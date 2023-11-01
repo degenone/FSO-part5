@@ -47,13 +47,14 @@ const Blog = (props) => {
                     </button>
                 </p>
                 <p>{blog.user.name}</p>
-                <button
-                    className='btn-delete'
-                    type='button'
-                    onClick={handleDelete}
-                    disabled={blog.user.username !== username}>
-                    Delete This
-                </button>
+                {blog.user.username === username && (
+                    <button
+                        className='btn-delete'
+                        type='button'
+                        onClick={handleDelete}>
+                        Delete This
+                    </button>
+                )}
             </div>
         </div>
     );
