@@ -22,11 +22,13 @@ const Blog = (props) => {
     };
     return (
         <div style={blogStyle}>
-            <strong>{blog.title}</strong> by <i>{blog.author}</i>{' '}
-            <button type='button' onClick={() => setVisible(!visible)}>
-                {visible ? 'Hide' : 'View'}
-            </button>
-            <div className={visible ? '' : 'hidden'}>
+            <div className='blog-header'>
+                <strong>{blog.title}</strong> by <i>{blog.author}</i>{' '}
+                <button type='button' onClick={() => setVisible(!visible)}>
+                    {visible ? 'Hide' : 'View'}
+                </button>
+            </div>
+            <div className={`blog-details${visible ? '' : ' hidden'}`}>
                 <p>
                     <a href={blog.url} target='_blank' rel='noreferrer'>
                         {blog.url}
