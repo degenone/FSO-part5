@@ -32,12 +32,12 @@ const Blog = (props) => {
                 </button>
             </div>
             <div className={`blog-details${visible ? '' : ' hidden'}`}>
-                <p>
+                <p className='blog-url'>
                     <a href={blog.url} target='_blank' rel='noreferrer'>
                         {blog.url}
                     </a>
                 </p>
-                <p>
+                <p className='blog-likes'>
                     Likes: {blog.likes}{' '}
                     <button
                         className='btn-like'
