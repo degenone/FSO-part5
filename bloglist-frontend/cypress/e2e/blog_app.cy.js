@@ -38,7 +38,7 @@ describe('Blog app', () => {
         });
     });
 
-    describe('When logged in', function() {
+    describe('When logged in', function () {
         beforeEach(function () {
             cy.request('POST', `${Cypress.env('URL')}/users`, user);
             cy.login(user.username, user.password);
@@ -56,13 +56,25 @@ describe('Blog app', () => {
         });
 
         describe('When blogs exist', () => {
-            beforeEach(function() {
-                cy.createBlog('blog 1', 'author 1', 'https://example.com/blogs/1');
-                cy.createBlog('blog 2', 'author 2', 'https://example.com/blogs/2');
-                cy.createBlog('blog 3', 'author 3', 'https://example.com/blogs/3');
+            beforeEach(function () {
+                cy.createBlog(
+                    'blog 1',
+                    'author 1',
+                    'https://example.com/blogs/1'
+                );
+                cy.createBlog(
+                    'blog 2',
+                    'author 2',
+                    'https://example.com/blogs/2'
+                );
+                cy.createBlog(
+                    'blog 3',
+                    'author 3',
+                    'https://example.com/blogs/3'
+                );
             });
 
-            it('User can like a blog', function() {
+            it('User can like a blog', function () {
                 cy.get('.blog-header').first().as('header');
                 cy.get('@header').should('contain', 'blog 1');
                 cy.get('@header').find('.btn-toggle').as('btnToggle');
@@ -74,6 +86,35 @@ describe('Blog app', () => {
                 cy.get('@blogLikes').should('contain', 0);
                 cy.get('@details').find('.btn-like').click();
                 cy.get('@blogLikes').should('contain', 1);
+            });
+
+            it('User can delete blog list item', function () {
+                cy.get('.blog-header').eq(1).as('header');
+                cy.get('@header').should('contain', 'author 2');
+                cy.get('@header').find('.btn-toggle').click();
+
+                cy.get('.blog-details').eq(1).find('.btn-delete').click();
+                cy.get('.blog-header').should('have.length', 2);
+                cy.get('html').should('not.contain', 'author 2');
+            });
+
+            it('User can NOT see delete button', function () {
+                cy.get('#btn-logout').click();
+                const newUser = {
+                    username: 'newuser',
+                    name: 'New User',
+                    password: 'baDpa$$123',
+                };
+                cy.request('POST', `${Cypress.env('URL')}/users`, newUser);
+                cy.login(newUser.username, newUser.password);
+                cy.get('.blog-header').eq(1).as('header');
+                cy.get('@header').should('contain', 'author 2');
+                cy.get('@header').find('.btn-toggle').click();
+
+                cy.get('.blog-details')
+                    .eq(1)
+                    .find('.btn-delete')
+                    .should('not.exist');
             });
         });
     });
