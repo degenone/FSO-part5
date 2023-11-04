@@ -26,7 +26,10 @@ describe('Blog app', () => {
             cy.get('#password').type(user.password);
             cy.get('#btn-login').click();
             cy.contains(user.name);
-            cy.get('html').should('not.contain', 'Log in to the Bloglist Application');
+            cy.get('html').should(
+                'not.contain',
+                'Log in to the Bloglist Application'
+            );
         });
 
         it('Fail logging in', function () {
