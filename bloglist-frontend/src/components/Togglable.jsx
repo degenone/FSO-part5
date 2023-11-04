@@ -14,7 +14,9 @@ const Togglable = forwardRef((props, ref) => {
     });
     return (
         <div>
-            <div className={visible ? 'hidden' : ''} style={buttonStyle}>
+            <div
+                className={`togglable-header${visible ? ' hidden' : ''}`}
+                style={buttonStyle}>
                 <button
                     className='btn-show'
                     type='button'
@@ -22,7 +24,7 @@ const Togglable = forwardRef((props, ref) => {
                     {buttonLabel}
                 </button>
             </div>
-            <div className={`togglable-content ${visible ? '' : ' hidden'}`}>
+            <div className={`togglable-content${visible ? '' : ' hidden'}`}>
                 {children}
                 <button
                     className='btn-hide'
