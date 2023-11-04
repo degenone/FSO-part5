@@ -26,6 +26,7 @@ describe('Blog app', () => {
             cy.get('#password').type(user.password);
             cy.get('#btn-login').click();
             cy.contains(user.name);
+            cy.get('html').should('not.contain', 'Log in to the Bloglist Application');
         });
 
         it('Fail logging in', function () {
@@ -49,15 +50,27 @@ describe('Blog app', () => {
             cy.contains('Create a new Blog List Item').should('not.be.visible');
         });
 
-        it('A blog list item can be created', function () {
-            cy.get('.btn-show').click();
-            cy.contains('Cancel');
-            cy.get('#title').type('Test Blog');
-            cy.get('#author').type('Jane Doe');
-            cy.get('#url').type('https://example.com/blogs/101');
-            cy.get('#btn-create').click();
-            cy.contains('Test Blog');
-            cy.contains('Jane Doe');
+        describe('When creating a blog list item', () => {
+            it('A blog list item can be created', function () {
+                cy.get('.btn-show').click();
+                cy.contains('Cancel');
+                cy.get('#title').type('Test Blog');
+                cy.get('#author').type('Jane Doe');
+                cy.get('#url').type('https://example.com/blogs/101');
+                cy.get('#btn-create').click();
+                cy.contains('Test Blog');
+                cy.contains('Jane Doe');
+            });
+
+            it('A blog list item can be created without author', function () {
+                cy.get('.btn-show').click();
+                cy.contains('Cancel');
+                cy.get('#title').type('Test Blog');
+                cy.get('#url').type('https://example.com/blogs/101');
+                cy.get('#btn-create').click();
+                cy.contains('Test Blog');
+                cy.should('not.contain', 'Jane Doe');
+            });
         });
 
         describe('When blogs exist', () => {
